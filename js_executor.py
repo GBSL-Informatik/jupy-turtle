@@ -1,5 +1,6 @@
 
 from typing import overload
+from IPython.core.display import HTML
 from IPython.core.display import Javascript
 from pathlib import Path
 from IPython.core.display import display
@@ -29,6 +30,11 @@ class JsExecutor:
         for script in js_path.glob('*.js'):
             with open(script, 'r') as reader:
                 cls.scripts[script.stem] = reader.read()
+                display(HTML(f'''
+                <script>
+                    {cls.scripts[script.stem]}
+                </script>
+                '''))
                 # display(Javascript(cls.scripts[script.stem]))
 
     @classmethod
@@ -70,8 +76,8 @@ class JsExecutor:
 
         escaped_args = map(JsExecutor.escape_arg, args)
 
+        # {cls.function_def(script)}
         return f'''
-            {cls.function_def(script)}
             {script}({', '.join(escaped_args)});
         '''
 
