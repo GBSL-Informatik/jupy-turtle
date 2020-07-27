@@ -1,6 +1,14 @@
 // source: https://codepen.io/Geeyoam/pen/vLGZzG
 
-function floodFill(elementId) {
+/**
+ * 
+ * @param {string} elementId 
+ * @param {int} x 
+ * @param {int} y 
+ * @param {string} color css color, e.g. 'red'
+ * @param {float} opacity [0-1]
+ */
+function floodFill(elementId, x, y, color, opacity) {
   var canvas = document.getElementById(elementId);
   var ctx = canvas.getContext("2d");
 
@@ -86,9 +94,8 @@ function floodFill(elementId) {
   }
 
   const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+  const col = {...nameToRGB(color), a: opacity }
 
-  const col = { r: 0xff, g: 0xff, b: 0x0, a: 0xff }
-
-  floodFill(imageData, col, 50, 50)
+  floodFill(imageData, col, x, y)
   ctx.putImageData(imageData, 0, 0)
 }

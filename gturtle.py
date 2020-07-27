@@ -243,8 +243,9 @@ class Turtle:
     def hideTurtle(self):
         pass
 
-    def fill(self):
-        JsExecutor.call('floodFill', self.canvas.id)
+    def fill(self, x, y):
+        pixelPos = self.canvas.transform(Vec2D(x, y))
+        JsExecutor.call('floodFill', self.canvas.id, pixelPos.x, pixelPos.y, self.fillStyle, 255)
 
     def startPath(self):
         JsExecutor.call('startPath', self.canvas.id)
@@ -335,9 +336,9 @@ def hideTurtle():
     pass
 
 
-def fill():
+def fill(x, y):
     global turtle
-    turtle.fill()
+    turtle.fill(x, y)
 
 
 def startPath():
